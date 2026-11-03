@@ -2,7 +2,7 @@
   "name": "cs336-wiki",
   "private": true,
   "type": "module",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "scripts": {
     "build": "node scripts/build.mjs",
     "check": "node scripts/check.mjs",

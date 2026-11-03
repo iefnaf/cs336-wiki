@@ -32,8 +32,8 @@ export function createCommunity({book, config, siteVersion}) {
   }
   function decorate(html, {slug}) {
     const isCommunity = slug === 'community';
-    html = html.replace('<link rel="stylesheet" href="/assets/style.css">','<link rel="stylesheet" href="/assets/style.css"><link rel="stylesheet" href="/assets/community.css"><link rel="stylesheet" href="/assets/feedback.css">');
-    html = html.replace('<script src="/assets/app.js" defer></script>','<script src="/assets/app.js" defer></script><script src="/assets/feedback.js" defer></script>');
+    html = html.replace('<link rel="stylesheet" href="/assets/style.css">','<link rel="stylesheet" href="/assets/style.css"><link rel="stylesheet" href="/assets/community.css"><link rel="stylesheet" href="/assets/feedback.css?v=' + esc(siteVersion) + '">');
+    html = html.replace('<script src="/assets/app.js" defer></script>','<script src="/assets/app.js" defer></script><script src="/assets/feedback.js?v=' + esc(siteVersion) + '" defer></script>');
     html = html.replace('href="/">阅读指南</a>', 'href="/">阅读指南</a><a class="nav-community' + (isCommunity ? ' active' : '') + '" href="/community/"' + (isCommunity ? ' aria-current="page"' : '') + '>读者社区 <span aria-hidden="true">↗</span></a>');
     html = html.replace('<div class="sidebar-foot">','<div class="sidebar-foot"><a class="repo-link" href="' + esc(config.repository_url) + '"' + external + '>↗ GitHub 项目</a>');
     html = html.replace('<button class="theme-toggle" aria-label="切换深色模式" title=', '<a class="topbar-community" href="/community/">反馈与讨论</a><button class="theme-toggle" aria-label="切换深色模式" title=');

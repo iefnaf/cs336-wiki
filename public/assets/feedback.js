@@ -34,7 +34,7 @@
   const verifyStatus=panel.querySelector('.feedback-verification-status');
   const reverify=panel.querySelector('.feedback-reverify');
   let selected=null,draft=null,widgetId=null,turnstileToken='',verificationGeneration=0;
-  let busy=false,succeeded=false,pollTimer,selectionTimer,turnstilePromise;
+  let busy=false,succeeded=false,pollTimer,selectionTimer,turnstilePromise,turnstileLoadSequence=0;
   function selectionContext() {
     const selection=window.getSelection();
     if(!selection||selection.isCollapsed||!selection.rangeCount||!article.contains(selection.anchorNode)||!article.contains(selection.focusNode))return null;
@@ -72,10 +72,11 @@
     if(turnstilePromise)return turnstilePromise;
     turnstilePromise=new Promise((resolve,reject)=>{
       const script=document.createElement('script');
-      const timeout=setTimeout(()=>{script.remove();reject(new Error('验证组件加载较慢，请重试。'));},15000);
-      script.src='https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';script.async=true;
-      script.onload=()=>{clearTimeout(timeout);window.turnstile.ready(()=>resolve(window.turnstile));};
-      script.onerror=()=>{clearTimeout(timeout);script.remove();reject(new Error('验证组件未能加载，请检查网络后重试。'));};
+      const callbackName='cs336TurnstileLoaded'+(++turnstileLoadSequence);
+      const timeout=setTimeout(()=>{script.remove();delete window[callbackName];reject(new Error('验证组件加载较慢，请重试。'));},15000);
+      window[callbackName]=()=>{clearTimeout(timeout);delete window[callbackName];resolve(window.turnstile);};
+      script.src='https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload='+callbackName;script.async=true;
+      script.onerror=()=>{clearTimeout(timeout);script.remove();delete window[callbackName];reject(new Error('验证组件未能加载，请检查网络后重试。'));};
       document.head.append(script);
     }).catch(e=>{turnstilePromise=null;throw e;});
     return turnstilePromise;

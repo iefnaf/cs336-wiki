@@ -41,6 +41,19 @@ async function select(page,selector) {
 }
 try {
   const {context,page,failOnce}=await setup({width:1440,height:1000});
+  const loaderContext=await browser.newContext({viewport:{width:1440,height:1000}});
+  await loaderContext.route('**/api/feedback/config',r=>r.fulfill({json:{sitekey:'browser-test-key'}}));
+  await loaderContext.route('https://challenges.cloudflare.com/turnstile/v0/api.js?**',r=>{
+    const callback=new URL(r.request().url()).searchParams.get('onload');
+    assert(callback,'Async Turnstile must initialize through the documented onload callback');
+    return r.fulfill({contentType:'application/javascript',body:'window.turnstile={render:function(s,o){setTimeout(function(){o.callback("test-token")},20);return "loader-test";},remove:function(){}};window['+JSON.stringify(callback)+']();'});
+  });
+  const loaderPage=await loaderContext.newPage();
+  loaderPage.on('pageerror',e=>errors.push(e.message));
+  await loaderPage.goto(base+'/assignment1/rope/',{waitUntil:'networkidle'});
+  await loaderPage.locator('.reader-tools .feedback-link').click();
+  await loaderPage.waitForFunction(()=>!document.querySelector('.feedback-submit').disabled);
+  await loaderContext.close();
   await page.goto(base+'/assignment1/rope/',{waitUntil:'networkidle'});
   const fallback=new URL(await page.locator('.reader-tools .feedback-link').getAttribute('href'));
   assert.equal(fallback.searchParams.get('template'),'error-report.yml');

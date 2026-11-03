@@ -41,7 +41,8 @@ for (const chapter of book.chapters) {
   for (const link of html.matchAll(/(?:href|src)="([^"]+)"/g)) {
     const href = link[1];
     if (!href.startsWith('/')) continue;
-    const [pathname,anchor] = href.split('#');
+    const parsed = new URL(href,'https://cs336.wiki');
+    const pathname = parsed.pathname, anchor = parsed.hash.slice(1);
     const target = path.join(root,'dist',pathname,pathname.endsWith('/')?'index.html':'');
     await fs.access(target);
     if (anchor && !pathname.endsWith('.pdf')) {
