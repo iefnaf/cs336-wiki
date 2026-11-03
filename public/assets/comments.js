@@ -47,7 +47,11 @@
   });
   section.querySelector('.comments-retry').addEventListener('click',()=>{
     const frame=container.querySelector('iframe.giscus-frame');
-    if(frame){pending();frame.src=frame.src;updateTheme();}
+    if(frame){
+      pending();
+      const url=new URL(frame.src);url.searchParams.set('theme',theme());
+      frame.addEventListener('load',updateTheme,{once:true});frame.src=url.href;
+    }
     else{client?.remove();initialized=false;initialize();}
   });
   document.querySelectorAll('a.chapter-discussion').forEach(a=>a.addEventListener('click',initialize));

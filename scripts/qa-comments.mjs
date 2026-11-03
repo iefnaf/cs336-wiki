@@ -50,6 +50,7 @@ try {
   await page.locator('.comments-error').waitFor({state:'visible'});
   await page.locator('.comments-retry').click();
   await page.locator('.comments-error').waitFor({state:'hidden'});
+  await frame.locator('html[data-theme="dark"]').waitFor();
   await page.goto(base+'/assignment1/unicode/#discussion',{waitUntil:'networkidle'});
   await page.locator('iframe.giscus-frame').waitFor();
   assert((await page.locator('iframe.giscus-frame').getAttribute('src')).includes('number=3'));

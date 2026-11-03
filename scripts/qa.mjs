@@ -10,6 +10,7 @@ const browser = await chromium.launch({headless:true, ...(process.argv[2] ? {exe
 const errors = [];
 const failures = [];
 const context = await browser.newContext({viewport:{width:1440,height:1000}});
+await context.route('https://giscus.app/client.js',r=>r.fulfill({contentType:'application/javascript',body:'/* Embedded discussion UI is checked separately by qa-comments.mjs. */'}));
 const page = await context.newPage();
 page.on('pageerror',e=>errors.push(e.message));
 page.on('response',r=>{if(r.status()>=400&&!r.url().endsWith('/not-a-real-chapter/')) failures.push({url:r.url(),status:r.status()});});
@@ -52,6 +53,7 @@ try {
   await page.goto(base+'/assignment1/rope/',{waitUntil:'networkidle'});
   await page.screenshot({path:root+'/artifacts/math-desktop.png',fullPage:true});
   const mobileContext = await browser.newContext({viewport:{width:390,height:844},isMobile:true,deviceScaleFactor:1});
+  await mobileContext.route('https://giscus.app/client.js',r=>r.fulfill({contentType:'application/javascript',body:'/* Embedded discussion UI is checked separately by qa-comments.mjs. */'}));
   const mobile = await mobileContext.newPage();
   mobile.on('pageerror',e=>errors.push(e.message));
   await mobile.goto(base,{waitUntil:'networkidle'});
