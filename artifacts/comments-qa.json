@@ -1,0 +1,15 @@
+{
+  "base": "http://127.0.0.1:3360",
+  "provider_mode": "mocked giscus widget; no comments published",
+  "checks": [
+    "Embedded chapter discussion below navigation",
+    "Top discussion link scrolls within the same page",
+    "Exact existing thread number per chapter",
+    "Editor visible in chapter page",
+    "Theme follows website",
+    "Provider errors have retry UI",
+    "Untrusted postMessage ignored",
+    "Mobile layout and community links stay within site"
+  ],
+  "errors": []
+}

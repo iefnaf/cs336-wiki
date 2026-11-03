@@ -24,6 +24,11 @@ for (const chapter of book.chapters) {
   assert.equal((html.match(/<h1(?:\s|>)/g)||[]).length,1,'Unexpected page headings: '+chapter.slug);
   assert(html.includes('id="original"'),'Missing original: '+chapter.slug);
   assert(html.includes('href="'+community.chapters[chapter.slug]+'"'),'Missing chapter discussion: '+chapter.slug);
+  assert.equal((html.match(/class="chapter-comments"/g)||[]).length,1,'One embedded discussion per chapter: '+chapter.slug);
+  const discussionNumber=community.chapters[chapter.slug].split('/').at(-1);
+  assert(html.includes('data-discussion-number="'+discussionNumber+'"'),'Exact discussion mapping: '+chapter.slug);
+  assert.equal((html.match(/class="chapter-discussion" href="#discussion"/g)||[]).length,2,'Chapter discussion navigation stays on page: '+chapter.slug);
+  assert(html.indexOf('id="discussion"')>html.indexOf('class="pager"'),'Discussion belongs below chapter navigation: '+chapter.slug);
   const feedback = [...html.matchAll(/class="feedback-link" href="([^"]+)"/g)];
   assert.equal(feedback.length,2,'Chapter feedback entry points: '+chapter.slug);
   for (const match of feedback) {

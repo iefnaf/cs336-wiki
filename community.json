@@ -30,5 +30,11 @@
     "openwebtext": "https://github.com/iefnaf/cs336-wiki/discussions/24",
     "leaderboard": "https://github.com/iefnaf/cs336-wiki/discussions/25",
     "references": "https://github.com/iefnaf/cs336-wiki/discussions/26"
+  },
+  "comments": {
+    "provider": "giscus",
+    "repository_id": "R_kgDOVhMsdg",
+    "category": "General",
+    "category_id": "DIC_kwDOVhMsds4DKSCN"
   }
 }
