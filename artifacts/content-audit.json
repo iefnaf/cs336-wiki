@@ -1,0 +1,266 @@
+{
+  "chapters": 25,
+  "problems": [
+    {
+      "id": "unicode1",
+      "title": "理解 Unicode",
+      "points": 1,
+      "slug": "unicode"
+    },
+    {
+      "id": "unicode2",
+      "title": "Unicode 编码",
+      "points": 3,
+      "slug": "unicode"
+    },
+    {
+      "id": "train_bpe",
+      "title": "BPE 分词器训练",
+      "points": 15,
+      "slug": "bpe-experiments"
+    },
+    {
+      "id": "train_bpe_tinystories",
+      "title": "在 TinyStories 上训练 BPE",
+      "points": 2,
+      "slug": "bpe-experiments"
+    },
+    {
+      "id": "train_bpe_expts_owt",
+      "title": "在 OpenWebText 上训练 BPE",
+      "points": 2,
+      "slug": "bpe-experiments"
+    },
+    {
+      "id": "tokenizer",
+      "title": "实现分词器",
+      "points": 15,
+      "slug": "tokenizer"
+    },
+    {
+      "id": "tokenizer_experiments",
+      "title": "分词器实验",
+      "points": 4,
+      "slug": "tokenizer"
+    },
+    {
+      "id": "linear",
+      "title": "实现线性模块",
+      "points": 1,
+      "slug": "modules"
+    },
+    {
+      "id": "embedding",
+      "title": "实现嵌入模块",
+      "points": 1,
+      "slug": "modules"
+    },
+    {
+      "id": "rmsnorm",
+      "title": "均方根层归一化",
+      "points": 1,
+      "slug": "rmsnorm-swiglu"
+    },
+    {
+      "id": "positionwise_feedforward",
+      "title": "实现逐位置前馈网络",
+      "points": 2,
+      "slug": "rmsnorm-swiglu"
+    },
+    {
+      "id": "rope",
+      "title": "实现 RoPE",
+      "points": 2,
+      "slug": "rope"
+    },
+    {
+      "id": "softmax",
+      "title": "实现 softmax",
+      "points": 1,
+      "slug": "attention"
+    },
+    {
+      "id": "scaled_dot_product_attention",
+      "title": "实现缩放点积注意力",
+      "points": 5,
+      "slug": "attention"
+    },
+    {
+      "id": "multihead_self_attention",
+      "title": "实现因果多头自注意力",
+      "points": 5,
+      "slug": "multihead-attention"
+    },
+    {
+      "id": "transformer_block",
+      "title": "实现 Transformer 块",
+      "points": 3,
+      "slug": "transformer"
+    },
+    {
+      "id": "transformer_lm",
+      "title": "实现 Transformer 语言模型",
+      "points": 3,
+      "slug": "transformer"
+    },
+    {
+      "id": "transformer_accounting",
+      "title": "Transformer 语言模型资源核算",
+      "points": 5,
+      "slug": "transformer"
+    },
+    {
+      "id": "cross_entropy",
+      "title": "实现交叉熵",
+      "points": 1,
+      "slug": "loss-sgd"
+    },
+    {
+      "id": "learning_rate_tuning",
+      "title": "调整学习率",
+      "points": 1,
+      "slug": "loss-sgd"
+    },
+    {
+      "id": "adamw",
+      "title": "实现 AdamW",
+      "points": 2,
+      "slug": "adamw"
+    },
+    {
+      "id": "adamw_accounting",
+      "title": "AdamW 训练资源核算",
+      "points": 2,
+      "slug": "adamw"
+    },
+    {
+      "id": "learning_rate_schedule",
+      "title": "实现带预热的余弦学习率调度",
+      "points": 1,
+      "slug": "scheduling"
+    },
+    {
+      "id": "gradient_clipping",
+      "title": "实现梯度裁剪",
+      "points": 1,
+      "slug": "scheduling"
+    },
+    {
+      "id": "data_loading",
+      "title": "实现数据加载",
+      "points": 2,
+      "slug": "data-checkpoints"
+    },
+    {
+      "id": "checkpointing",
+      "title": "实现模型检查点",
+      "points": 1,
+      "slug": "data-checkpoints"
+    },
+    {
+      "id": "training_together",
+      "title": "把组件组合起来",
+      "points": 4,
+      "slug": "training-loop"
+    },
+    {
+      "id": "decoding",
+      "title": "解码",
+      "points": 3,
+      "slug": "generation"
+    },
+    {
+      "id": "experiment_log",
+      "title": "实验记录",
+      "points": 3,
+      "slug": "experiment-setup"
+    },
+    {
+      "id": "learning_rate",
+      "title": "调整学习率",
+      "points": 3,
+      "slug": "tinystories"
+    },
+    {
+      "id": "batch_size_experiment",
+      "title": "改变批次大小",
+      "points": 1,
+      "slug": "tinystories"
+    },
+    {
+      "id": "generate",
+      "title": "生成文本",
+      "points": 1,
+      "slug": "tinystories"
+    },
+    {
+      "id": "layer_norm_ablation",
+      "title": "移除 RMSNorm 后训练",
+      "points": 1,
+      "slug": "ablations"
+    },
+    {
+      "id": "pre_norm_ablation",
+      "title": "实现后归一化并训练",
+      "points": 1,
+      "slug": "ablations"
+    },
+    {
+      "id": "no_pos_emb",
+      "title": "实现 NoPE",
+      "points": 1,
+      "slug": "ablations"
+    },
+    {
+      "id": "swiglu_ablation",
+      "title": "SwiGLU 与 SiLU",
+      "points": 1,
+      "slug": "ablations"
+    },
+    {
+      "id": "main_experiment",
+      "title": "OpenWebText 实验",
+      "points": 2,
+      "slug": "openwebtext"
+    },
+    {
+      "id": "leaderboard",
+      "title": "排行榜",
+      "points": 6,
+      "slug": "leaderboard"
+    }
+  ],
+  "equations": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29
+  ],
+  "words": 17296,
+  "source_sha256": "cf402d1c6d3c66da035bdf33b3e2c1bbc4bb92a78b006ee36577e925a265e328"
+}

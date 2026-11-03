@@ -1,0 +1,88 @@
+{
+  "url": "https://cs336.wiki",
+  "platform": "Cloudflare Workers Static Assets",
+  "worker": "cs336-wiki",
+  "version_id": "6dab5581-6232-471c-a7be-a49f0f9d726e",
+  "verified_at": "2026-11-03T09:33:32.254Z",
+  "source_sha256": "cf402d1c6d3c66da035bdf33b3e2c1bbc4bb92a78b006ee36577e925a265e328",
+  "custom_domain_enabled": true,
+  "html_matches_local_build": true,
+  "http_checks": [
+    {
+      "route": "/",
+      "status": 200,
+      "bytes": 15583,
+      "contentType": "text/html",
+      "server": "cloudflare",
+      "contentSecurityPolicy": true
+    },
+    {
+      "route": "/assignment1/rope/",
+      "status": 200,
+      "bytes": 60129,
+      "contentType": "text/html",
+      "server": "cloudflare",
+      "contentSecurityPolicy": true
+    },
+    {
+      "route": "/source/cs336_assignment1_basics.pdf",
+      "status": 200,
+      "bytes": 965629,
+      "contentType": "application/pdf",
+      "server": "cloudflare",
+      "contentSecurityPolicy": true,
+      "sha256": "cf402d1c6d3c66da035bdf33b3e2c1bbc4bb92a78b006ee36577e925a265e328"
+    },
+    {
+      "route": "/search-index.json",
+      "status": 200,
+      "bytes": 105589,
+      "contentType": "application/json",
+      "server": "cloudflare",
+      "contentSecurityPolicy": true
+    },
+    {
+      "route": "/not-a-real-chapter/",
+      "status": 404,
+      "bytes": 7182,
+      "contentType": "text/html",
+      "server": "cloudflare",
+      "contentSecurityPolicy": true
+    }
+  ],
+  "content_checks": {
+    "chapters": 25,
+    "exercises": 38,
+    "total_points": 109,
+    "equations": 29,
+    "chinese_characters": 17296,
+    "source_sha256": "cf402d1c6d3c66da035bdf33b3e2c1bbc4bb92a78b006ee36577e925a265e328",
+    "checks": [
+      "All source exercise IDs preserved",
+      "All 29 numbered equations preserved",
+      "Local links and anchors resolve",
+      "Source excerpts resolved",
+      "No KaTeX errors"
+    ]
+  },
+  "student_repository_status": "clean",
+  "production_browser_qa": {
+    "base": "https://cs336.wiki",
+    "desktop_pages": 25,
+    "mobile_pages": 25,
+    "checks": [
+      "Search by exercise ID and Chinese text",
+      "Keyboard search navigation",
+      "Theme persistence",
+      "Mobile navigation",
+      "English original disclosure",
+      "Continue reading and position restore",
+      "Rendered math",
+      "No page overflow",
+      "404 status",
+      "No browser errors or failed resources"
+    ],
+    "errors": [],
+    "failures": []
+  }
+}

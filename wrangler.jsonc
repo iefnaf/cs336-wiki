@@ -1,0 +1,14 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "cs336-wiki",
+  "account_id": "594cb67aa98b9ad3558ad3b13716ae63",
+  "compatibility_date": "2026-11-03",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page",
+    "html_handling": "auto-trailing-slash"
+  },
+  "routes": [
+    { "pattern": "cs336.wiki", "custom_domain": true }
+  ]
+}

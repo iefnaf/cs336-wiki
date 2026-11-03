@@ -1,0 +1,19 @@
+{
+  "base": "https://cs336.wiki",
+  "desktop_pages": 25,
+  "mobile_pages": 25,
+  "checks": [
+    "Search by exercise ID and Chinese text",
+    "Keyboard search navigation",
+    "Theme persistence",
+    "Mobile navigation",
+    "English original disclosure",
+    "Continue reading and position restore",
+    "Rendered math",
+    "No page overflow",
+    "404 status",
+    "No browser errors or failed resources"
+  ],
+  "errors": [],
+  "failures": []
+}

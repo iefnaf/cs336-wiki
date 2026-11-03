@@ -1,0 +1,14 @@
+{
+  "base": "http://127.0.0.1:3360",
+  "checks": [
+    "No-JavaScript feedback URL has chapter, source pages and versions",
+    "Selected text and section anchors carried into Issue form",
+    "Long Unicode selections stay intact within URL budget",
+    "Public-reader links require no label permission",
+    "25 chapter discussion links",
+    "Desktop/mobile community navigation",
+    "Dark and light community layout",
+    "No page overflow or script errors"
+  ],
+  "errors": []
+}

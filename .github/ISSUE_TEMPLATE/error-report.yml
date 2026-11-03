@@ -1,0 +1,63 @@
+name: 错误反馈
+description: 反馈中文翻译、术语、公式、原文代码显示、排版或链接错误。
+title: "[纠错] "
+labels: ["errata", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢帮助改进 CS336.wiki！请描述阅读材料的问题，不要提交作业答案或完整实现。
+        从网站「纠错反馈」进入时，章节、网址和版本会自动填入；也可以先在网页选中需要修正的文字。
+  - type: dropdown
+    id: error_type
+    attributes:
+      label: 问题类型
+      options:
+        - 翻译或术语
+        - 公式或原文代码显示
+        - 排版、链接或阅读功能
+        - 其他
+    validations:
+      required: true
+  - type: input
+    id: chapter
+    attributes:
+      label: 所在章节
+      placeholder: "例如：3.4.3 旋转位置嵌入 RoPE"
+    validations:
+      required: true
+  - type: input
+    id: page_url
+    attributes:
+      label: 页面链接
+      placeholder: "https://cs336.wiki/assignment1/rope/"
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: 阅读版本
+      placeholder: "原文 v26.0.3 · 网站 v1.1.0"
+  - type: input
+    id: pdf_pages
+    attributes:
+      label: 对应英文 PDF 页码
+      placeholder: "例如：22–23"
+  - type: textarea
+    id: excerpt
+    attributes:
+      label: 有问题的文字
+      placeholder: 粘贴需要修正的句子、公式位置，或上传截图。
+  - type: textarea
+    id: description
+    attributes:
+      label: 问题描述
+      description: 哪里不准确、容易误解，或与英文原文不一致？
+      placeholder: 请尽量说明判断依据；显示问题请注明设备和浏览器。
+    validations:
+      required: true
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: 建议修改
+      description: 可选。可以给出更合适的译法，或指出原文中的依据。

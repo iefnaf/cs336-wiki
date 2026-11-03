@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 章节讨论与学习交流
+    url: https://github.com/iefnaf/cs336-wiki/discussions
+    about: 概念理解、阅读疑问与学习心得，请到 Discussions 交流。
+  - name: 阅读体验与功能建议
+    url: https://github.com/iefnaf/cs336-wiki/discussions/categories/ideas
+    about: 网站功能和内容组织的建议，欢迎先在 Ideas 讨论。
