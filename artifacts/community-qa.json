@@ -1,5 +1,5 @@
 {
-  "base": "http://127.0.0.1:3360",
+  "base": "https://cs336.wiki",
   "checks": [
     "No-JavaScript feedback URL has chapter, source pages and versions",
     "Selected text and section anchors carried into Issue form",
