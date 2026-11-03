@@ -18,7 +18,7 @@ AdamW 是有状态的：每个参数都要维护一阶、二阶矩的运行估�
 
 ::: problem adamw | 实现 AdamW | 2
 
-**交付物：** 实现继承 <code>torch.optim.Optimizer</code> 的 AdamW 类。构造方法接收学习率 $\alpha$、$\beta$、$\varepsilon$、$\lambda$ 等超参数。
+**交付物：** 实现继承 <code>torch.optim.Optimizer</code> 的 AdamW 类。构造方法接收学习率 $\alpha$、一阶和二阶矩衰减系数 $(\beta_1,\beta_2)$、数值稳定项 $\varepsilon$、权重衰减系数 $\lambda$ 等超参数。
 
 父类的 <code>self.state</code> 字典将 <code>nn.Parameter</code> 映射到各参数的状态字典，可保存 AdamW 所需的矩估计。
 
@@ -49,7 +49,7 @@ AdamW 是有状态的：每个参数都要维护一阶、二阶矩的运行估�
 
 **交付物：** 代数表达式及简短说明。
 
-**(d)** 模型 FLOPs 利用率 **MFU** [16] 衡量观测到的 token 吞吐相对硬件理论峰值计算吞吐的利用情况。NVIDIA H100 的“float32”理论峰值为 **495 TFLOP/s**；实际指 TensorFloat-32，原文将其称为 “bfloat19”。
+**(d)** 模型 FLOPs 利用率 **MFU** [16] 通常定义为训练实际需要的模型 FLOPs 与硬件同时期理论可提供峰值 FLOPs 之比；实际测量时，常由 token 吞吐量和每个 token 的模型 FLOPs 推导。NVIDIA H100 的 **495 TFLOP/s** 指 TensorFloat-32（TF32）Tensor Core 峰值；原文中的 “bfloat19” 是笔误。
 
 若达到 **50% MFU**，单张 H100 训练 GPT-2 XL **400K 步**、批次大小 **1024**，需要多久？沿用 Kaplan 等人 [25] 和 Hoffmann 等人 [26]，假定反向传播 FLOPs 是前向传播的两倍。
 

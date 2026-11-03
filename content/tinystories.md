@@ -21,7 +21,7 @@
 | <code>d_model</code> | **512**，小于许多小型 Transformer 论文使用的 768，有助于提速。 |
 | <code>d_ff</code> | **1344**，约为 $\frac83d_{\mathrm{model}}$，且为 64 的倍数。 |
 | RoPE 的 $\Theta$ | **10,000**。 |
-| 层数、头数 | **4 层、16 头**，约 17M 非嵌入参数，属于很小的 Transformer。 |
+| 层数、头数 | **4 层、16 头**。非嵌入参数约 **12.5M**；若绑定 token embedding 与 LM head，总参数约 **17.6M**，不绑定时约 **22.7M**，属于很小的 Transformer。 |
 | 总处理 token 数 | **327,680,000**；批次大小 × 总步数 × 上下文长度应大致等于它。 |
 
 还需要试验：学习率、学习率预热、AdamW 的 $\beta_1,\beta_2,\varepsilon$、权重衰减。典型配置可参考 Kingma 等人 [22]。

@@ -1,8 +1,8 @@
 ## 3 Transformer 语言模型架构
 
-语言模型接收一批整数 token ID 序列，输入张量形状为 <code>(batch_size, sequence_length)</code>，并返回各位置上覆盖整个词表的归一化概率分布，形状为 <code>(batch_size, sequence_length, vocab_size)</code>。每个位置预测的是该 token 之后的下一个 token。
+语言模型接收一批整数 token ID 序列，输入张量形状为 <code>(batch_size, sequence_length)</code>，并返回各位置覆盖整个词表的 logits，形状为 <code>(batch_size, sequence_length, vocab_size)</code>。训练或推理时再对最后一维应用 softmax，得到下一 token 的概率分布。每个位置预测的是该 token 之后的下一个 token。
 
-训练时，利用这些预测计算真实下一 token 与预测分布之间的交叉熵。推理生成时，取最后一个时间步的预测分布，选出下一个 token，例如取最大概率项或从分布采样，再把生成的 token 接到输入序列后面，重复此过程。
+训练时，利用 logits 计算真实下一 token 与预测分布之间的交叉熵。推理生成时，先取最后一个时间步的 logits 并应用 softmax，再选出下一个 token，例如取最大概率项或从分布采样，然后把生成的 token 接到输入序列后面，重复此过程。
 
 这一部分将从零构建 Transformer 语言模型。先介绍整体结构，再逐步说明各组件。
 
