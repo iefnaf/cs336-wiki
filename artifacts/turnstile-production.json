@@ -3,5 +3,8 @@
   "feedback_posted": false,
   "widget_completed": false,
   "error": "page.waitForFunction: Timeout 22000ms exceeded.",
-  "visible_status": "正在准备验证…"
+  "visible_status": "正在验证…",
+  "widget_rendered": true,
+  "manual_interaction_required": true,
+  "note": "The live widget rendered its human-verification checkbox. Automated browser did not complete that human interaction; no feedback was posted."
 }

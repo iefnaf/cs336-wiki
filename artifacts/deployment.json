@@ -2,8 +2,7 @@
   "url": "https://cs336.wiki",
   "platform": "Cloudflare Workers Static Assets",
   "worker": "cs336-wiki",
-  "version_id": "3ad26588-7b82-4819-9c9f-411166cfa8cf",
-  "verified_at": "2026-11-03T10:06:46.558Z",
+  "verified_at": "2026-11-03T10:39:48.411Z",
   "source_sha256": "cf402d1c6d3c66da035bdf33b3e2c1bbc4bb92a78b006ee36577e925a265e328",
   "custom_domain_enabled": true,
   "html_matches_local_build": true,
@@ -85,7 +84,7 @@
     "errors": [],
     "failures": []
   },
-  "site_version": "1.1.0",
+  "site_version": "1.2.1",
   "community": {
     "repository": "https://github.com/iefnaf/cs336-wiki",
     "issues": "https://github.com/iefnaf/cs336-wiki/issues",
@@ -244,5 +243,63 @@
       "status": 200,
       "matches_local": true
     }
-  ]
+  ],
+  "inline_feedback": {
+    "api_checks": [
+      {
+        "path": "/api/feedback/config",
+        "status": 200
+      },
+      {
+        "path": "/api/feedback/sync",
+        "status": 401,
+        "error": "Unauthorized"
+      },
+      {
+        "path": "/api/feedback/sync",
+        "status": 200,
+        "pending_count": 0
+      },
+      {
+        "path": "/api/feedback",
+        "status": 400,
+        "error": "验证已过期或未通过，请重新验证后提交。"
+      }
+    ],
+    "database": "cs336-wiki-feedback",
+    "browser_qa": {
+      "base": "http://127.0.0.1:3360",
+      "api_mode": "mocked browser transport; real backend and sync covered by SQLite integration tests",
+      "checks": [
+        "Selection-adjacent feedback button",
+        "Persistent quote highlight while editing",
+        "In-page form and success receipt with no new tabs",
+        "Failure preserves draft and retry ID",
+        "Chapter and section context included",
+        "Mobile selection, form, submission and navigation",
+        "No page or dialog overflow",
+        "25 chapter discussions retained"
+      ],
+      "submitted_requests": 3,
+      "errors": []
+    },
+    "service_tests": {
+      "passed": 5,
+      "storage": "real SQLite",
+      "external_apis": "mocked"
+    },
+    "turnstile": {
+      "url": "https://cs336.wiki",
+      "feedback_posted": false,
+      "widget_completed": false,
+      "error": "page.waitForFunction: Timeout 22000ms exceeded.",
+      "visible_status": "正在验证…",
+      "widget_rendered": true,
+      "manual_interaction_required": true,
+      "note": "The live widget rendered its human-verification checkbox. Automated browser did not complete that human interaction; no feedback was posted."
+    },
+    "sync_run": "https://github.com/iefnaf/cs336-wiki/actions/runs/41619937065",
+    "ci_run": "https://github.com/iefnaf/cs336-wiki/actions/runs/41620844508",
+    "deploy_run": "https://github.com/iefnaf/cs336-wiki/actions/runs/41620844377"
+  }
 }

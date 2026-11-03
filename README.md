@@ -16,7 +16,7 @@ Stanford CS336 2026 作业 1 的非官方中文电子书，部署在 https://cs3
 
 每章对应一个固定 GitHub Discussions 讨论帖，全部章节都可从读者社区找到。回复讨论仍使用 GitHub 账号。无 JavaScript 时，反馈入口保留 GitHub Issue 表单作为备选。
 
-修订请参考 [CONTRIBUTING.md](CONTRIBUTING.md)。GitHub Actions 在 PR 和 main 分支更新时核验内容完整性、链接以及反馈接收与同步逻辑；部署仍由维护者执行。
+修订请参考 [CONTRIBUTING.md](CONTRIBUTING.md)。GitHub Actions 在 PR 和 main 分支更新时核验内容完整性、链接以及反馈接收与同步逻辑；main 更新会自动构建、检查并部署到 Cloudflare，也可由维护者手动部署。
 
 ## 内容与来源
 
@@ -72,7 +72,7 @@ npm run deploy
 
 首次部署需初始化 D1（迁移位于 migrations/），并在 Worker 配置 TURNSTILE_SECRET_KEY、FEEDBACK_SYNC_TOKEN 两个 Secret。TURNSTILE_SITE_KEY 是公开的站点配置。GitHub 仓库也需配置同值的 FEEDBACK_SYNC_TOKEN Secret。
 
-部署使用执行者自己的 Cloudflare 登录。凭据不存放在项目目录内。已经绑定的域名由 Wrangler 配置管理。
+自动部署使用 GitHub 仓库的 CLOUDFLARE_API_TOKEN Secret；手动部署使用执行者自己的 Cloudflare 登录。凭据不存放在项目目录内。已经绑定的域名由 Wrangler 配置管理。
 
 ## 验收证据
 
