@@ -71,7 +71,7 @@ if ('IntersectionObserver' in window) {
   $$('main h2[id], main h3[id], main section[id]').forEach(h => observer.observe(h));
 }
 document.addEventListener('keydown', e => {
-  if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey || ['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName) || $('.search-dialog').open || document.activeElement?.isContentEditable) return;
+  if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey || ['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName) || document.querySelector('dialog[open]') || document.activeElement?.isContentEditable) return;
   if (e.key === 'ArrowRight') $('.pager .next')?.click();
   if (e.key === 'ArrowLeft') $('.pager a:not(.next)')?.click();
 });
@@ -95,6 +95,7 @@ function openSearch() {
 $$('.search-trigger').forEach(b => b.addEventListener('click', openSearch));
 document.addEventListener('keydown', e => {
   if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+    if (document.querySelector('.feedback-dialog[open]')) return;
     e.preventDefault();
     dialog.open ? dialog.close() : openSearch();
   }

@@ -6,9 +6,28 @@
   "assets": {
     "directory": "./dist",
     "not_found_handling": "404-page",
-    "html_handling": "auto-trailing-slash"
+    "html_handling": "auto-trailing-slash",
+    "binding": "ASSETS",
+    "run_worker_first": [
+      "/api/*"
+    ]
   },
   "routes": [
-    { "pattern": "cs336.wiki", "custom_domain": true }
-  ]
+    {
+      "pattern": "cs336.wiki",
+      "custom_domain": true
+    }
+  ],
+  "main": "worker/index.mjs",
+  "d1_databases": [
+    {
+      "binding": "FEEDBACK_DB",
+      "database_name": "cs336-wiki-feedback",
+      "database_id": "e3f50032-4648-4fa3-b2bd-bcd874b08576",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "vars": {
+    "TURNSTILE_SITE_KEY": "0x4AAAAAAFx0S1cBoAOMS1fv"
+  }
 }

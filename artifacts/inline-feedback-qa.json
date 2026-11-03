@@ -1,0 +1,16 @@
+{
+  "base": "http://127.0.0.1:3360",
+  "api_mode": "mocked browser transport; real backend and sync covered by SQLite integration tests",
+  "checks": [
+    "Selection-adjacent feedback button",
+    "Persistent quote highlight while editing",
+    "In-page form and success receipt with no new tabs",
+    "Failure preserves draft and retry ID",
+    "Chapter and section context included",
+    "Mobile selection, form, submission and navigation",
+    "No page or dialog overflow",
+    "25 chapter discussions retained"
+  ],
+  "submitted_requests": 3,
+  "errors": []
+}

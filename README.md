@@ -10,13 +10,13 @@ Stanford CS336 2026 作业 1 的非官方中文电子书，部署在 https://cs3
 
 ## 纠错与讨论
 
-每章顶部与末尾有「纠错反馈」和「本章讨论」。反馈入口会打开 GitHub Issue 表单，预填章节、页面链接、原文与网站版本、PDF 页码。先选中正文再点击反馈，还会自动带上文字引用及所在小节的锚点。选文很长时只预填一段引用，完整说明可在 GitHub 表单中补充。
+在正文中选中文字，旁边会出现「反馈这处错误」。点击即可在页内填写问题说明和建议，不跳转 GitHub，也无需登录。引用文字、所在小节、章节和版本随反馈保存；失败时保留草稿，并可安全重试。顶部和末尾的反馈入口也可打开同一表单。
 
-反馈不会在点击网页入口时直接发布；读者需要登录 GitHub 并在表单中确认提交。使用 Issue 模板自动设置标签，普通读者的反馈 URL 不依赖标签管理权限。
+反馈先写入 Cloudflare D1，随后由 GitHub Actions 同步到 Issues。同步任务使用仓库自带的临时 GITHUB_TOKEN，仅授予 Issues 写权限；生产服务不保存个人 GitHub 令牌。同步存在延迟，提交成功表示已可靠保存，不表示 Issue 已即时创建。同步失败时记录仍保留，后续运行会重试并避免重复创建。
 
-每章对应一个固定 GitHub Discussions 讨论帖，全部章节都可从读者社区找到。讨论使用 GitHub 原生页面，无需安装额外评论应用。
+每章对应一个固定 GitHub Discussions 讨论帖，全部章节都可从读者社区找到。回复讨论仍使用 GitHub 账号。无 JavaScript 时，反馈入口保留 GitHub Issue 表单作为备选。
 
-中文正文与站点代码已经公开，修订请参考 [CONTRIBUTING.md](CONTRIBUTING.md)。GitHub Actions 会在 PR 和 main 分支更新时构建并核验题目、分值、公式、链接与反馈入口；部署仍由维护者执行。
+修订请参考 [CONTRIBUTING.md](CONTRIBUTING.md)。GitHub Actions 在 PR 和 main 分支更新时核验内容完整性、链接以及反馈接收与同步逻辑；部署仍由维护者执行。
 
 ## 内容与来源
 
@@ -63,12 +63,14 @@ node scripts/qa.mjs
 
 ## 部署
 
-站点是纯静态内容，使用 Cloudflare Workers Static Assets。<code>wrangler.jsonc</code> 中声明 <code>cs336.wiki</code> 自定义域名，Cloudflare 自动管理 HTTPS。无数据库、服务端应用或第三方 CDN 依赖。
+阅读页面使用 Cloudflare Workers Static Assets；页内纠错通过同一 Worker 的 API 接收，写入 D1，并由 Turnstile 验证提交。<code>wrangler.jsonc</code> 中声明 <code>cs336.wiki</code> 自定义域名，Cloudflare 自动管理 HTTPS。公式与阅读资源随站点部署。只有打开纠错表单时才加载 Turnstile。
 
 ~~~text
 npx wrangler login
 npm run deploy
 ~~~
+
+首次部署需初始化 D1（迁移位于 migrations/），并在 Worker 配置 TURNSTILE_SECRET_KEY、FEEDBACK_SYNC_TOKEN 两个 Secret。TURNSTILE_SITE_KEY 是公开的站点配置。GitHub 仓库也需配置同值的 FEEDBACK_SYNC_TOKEN Secret。
 
 部署使用执行者自己的 Cloudflare 登录。凭据不存放在项目目录内。已经绑定的域名由 Wrangler 配置管理。
 
@@ -84,3 +86,16 @@ npm run deploy
 ## 后续更新原版
 
 当前站点固定对应 v26.0.3。更新 PDF 时，应同步更新 <code>book.json</code> 的版本、页码与校验和，重新提取英文原文、核对中文译文和图片，再运行构建与验收。不要只替换 PDF 而保留旧译文的版本信息。
+
+## 反馈服务验证与维护
+
+~~~text
+npm run test:feedback
+node scripts/qa-feedback.mjs /path/to/chromium
+~~~
+
+服务测试使用真实 SQLite 与模拟的外部 API，覆盖校验、限流、持久保存、幂等重试、同步鉴权以及 Issue 创建后的回执失败恢复。浏览器验收覆盖桌面和手机端的选文按钮、页内表单、失败保留、提交回执与导航；测试中模拟 Turnstile 和提交传输，不向公开仓库制造测试反馈。
+
+同步工作流约每 5 分钟触发，也可在 Actions 中手动运行 Sync reader feedback。GitHub 的调度可能延迟；公开仓库长期无活动时，计划工作流可能被停用，需要维护者重新启用。维护时应定期确认同步任务成功、待处理队列没有积压。接收成功的反馈会一直保留，不会因同步失败丢失。
+
+Worker 的 /api/feedback/sync 仅允许持有同步 Secret 的工作流访问；公开回执接口只返回状态与 Issue 链接，不返回反馈正文。服务不存储原始 IP，只存储用于短时限流的不可逆摘要。
