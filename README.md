@@ -14,7 +14,7 @@ Stanford CS336 2026 作业 1 的非官方中文电子书，部署在 https://cs3
 
 反馈先写入 Cloudflare D1，随后由 GitHub Actions 同步到 Issues。同步任务使用仓库自带的临时 GITHUB_TOKEN，仅授予 Issues 写权限；生产服务不保存个人 GitHub 令牌。同步存在延迟，提交成功表示已可靠保存，不表示 Issue 已即时创建。同步失败时记录仍保留，后续运行会重试并避免重复创建。
 
-每章对应一个固定 GitHub Discussions 讨论帖，全部章节都可从读者社区找到。回复讨论仍使用 GitHub 账号。无 JavaScript 时，反馈入口保留 GitHub Issue 表单作为备选。
+每章正文下方嵌入 giscus 评论区，直接阅读、发表评论和回复。每页按固定讨论号连接已有 GitHub Discussions，保留原讨论记录；顶部「本章讨论」会滚动到本页下方，社区目录也指向对应页内讨论。阅读无需登录，发表评论时使用 GitHub 账号。无 JavaScript 时，反馈入口保留 GitHub Issue 表单作为备选。
 
 修订请参考 [CONTRIBUTING.md](CONTRIBUTING.md)。GitHub Actions 在 PR 和 main 分支更新时核验内容完整性、链接以及反馈接收与同步逻辑；main 更新会自动构建、检查并部署到 Cloudflare，也可由维护者手动部署。
 
@@ -99,3 +99,17 @@ node scripts/qa-feedback.mjs /path/to/chromium
 同步工作流约每 5 分钟触发，也可在 Actions 中手动运行 Sync reader feedback。GitHub 的调度可能延迟；公开仓库长期无活动时，计划工作流可能被停用，需要维护者重新启用。维护时应定期确认同步任务成功、待处理队列没有积压。接收成功的反馈会一直保留，不会因同步失败丢失。
 
 Worker 的 /api/feedback/sync 仅允许持有同步 Secret 的工作流访问；公开回执接口只返回状态与 Issue 链接，不返回反馈正文。服务不存储原始 IP，只存储用于短时限流的不可逆摘要。
+
+## 页内讨论配置
+
+页内讨论使用 giscus；它是评论界面，讨论记录仍保存在本仓库已有的 GitHub Discussions 中。community.json 保存仓库、分类 ID 与每章固定讨论号，按 number 精确映射，避免章节串帖。
+
+启用前，仓库所有者需在 https://github.com/apps/giscus/installations/new 安装 giscus GitHub App，仅选择 iefnaf/cs336-wiki 仓库。应用权限为 Discussions 读写及仓库元数据读取。现有 GitHub CLI 登录不能替代该应用的仓库授权。
+
+评论组件在读者滚动到章节末尾附近时加载，支持中文界面、深浅主题跟随、异常重试。giscus.json 将允许嵌入的来源限制为 https://cs336.wiki。giscus 需要读者授权 GitHub 登录后发表评论，阅读讨论无需登录。
+
+~~~text
+node scripts/qa-comments.mjs /path/to/chromium
+~~~
+
+此浏览器检查使用模拟的 giscus iframe 验证页内定位、固定讨论映射、评论框、主题切换和手机布局，不会发布测试评论。真实服务验证应在应用安装后进行。
