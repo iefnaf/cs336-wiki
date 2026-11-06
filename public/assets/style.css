@@ -13,3 +13,10 @@
 .sidebar-theme{display:none}@media(max-width:800px){.sidebar-theme{display:flex;padding:0;margin-bottom:15px}}
 
 .prose{font-size:16px}.prose pre{font-size:12px}.prose table{font-size:13px}.home-description{font-size:14px}.sidebar nav a{font-size:12.5px}@media(min-width:1600px){.prose{font-size:16.5px}}@media(max-width:800px){.prose{font-size:15.5px}.prose pre{font-size:11px}.prose table{font-size:12px}.home-description{font-size:13px}}
+
+.wechat-card{display:flex;align-items:center;gap:24px;margin:20px 0;padding:20px;border:1px solid var(--line,#e5e5e5);border-radius:12px}
+.wechat-card img{width:180px;height:auto;flex:none;border-radius:8px;background:#fff}
+.wechat-card strong{display:block;font-size:1.1rem}
+.wechat-card p{margin:6px 0}
+.wechat-card small{opacity:.7}
+@media(max-width:560px){.wechat-card{flex-direction:column;text-align:center}}
