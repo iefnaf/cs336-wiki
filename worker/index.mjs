@@ -1,5 +1,6 @@
 import book from '../book.json' with {type:'json'};
 import packageInfo from '../package.json' with {type:'json'};
+import { synchronizeFeedback } from './sync.mjs';
 const ORIGIN = 'https://cs336.wiki';
 const TYPES = new Set(['translation','math-code','layout','other']);
 const UUID = /^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/i;
@@ -85,7 +86,15 @@ export function createFeedbackWorker({fetcher=fetch,now=Date.now}={}) {
     }
     return json({id:data.id,status:'pending',issue_url:null,created_at:timestamp},202);
   }
-  return {
+  const worker={
+    async scheduled(controller,env) {
+      if(!env.GITHUB_ISSUES_TOKEN) {console.error('Feedback sync skipped: GITHUB_ISSUES_TOKEN is not set');return;}
+      const result=await synchronizeFeedback({
+        githubToken:env.GITHUB_ISSUES_TOKEN,syncToken:env.FEEDBACK_SYNC_TOKEN,baseURL:ORIGIN,
+        fetcher:(url,options)=>url.startsWith(ORIGIN+'/')?worker.fetch(new Request(url,options),env):fetcher(url,options)
+      });
+      console.log('Feedback sync complete',JSON.stringify(result));
+    },
     async fetch(request,env) {
       const url=new URL(request.url);
       if(!url.pathname.startsWith('/api/'))return env.ASSETS.fetch(request);
@@ -122,5 +131,6 @@ export function createFeedbackWorker({fetcher=fetch,now=Date.now}={}) {
       }
     }
   };
+  return worker;
 }
 export default createFeedbackWorker();

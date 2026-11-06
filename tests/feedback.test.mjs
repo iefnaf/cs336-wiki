@@ -96,3 +96,21 @@ test('sync creates an Issue once, and recovers if acknowledgment failed',async()
   assert.equal(ctx.db.prepare('SELECT status FROM feedback').get().status,'synced');
   ctx.db.close();
 });
+test('scheduled run turns pending feedback into one Issue without network access to the site',async()=>{
+  const ctx=setup(),body=feedback();
+  await ctx.call('/api/feedback',body);
+  const calls=[];
+  const worker=createFeedbackWorker({now:()=>1730000000001,fetcher:async(url,options={})=>{
+    calls.push(url);
+    if(url.endsWith('/issues?state=all&labels=reader-feedback&per_page=100&page=1'))return Response.json([]);
+    if(url.endsWith('/issues'))return Response.json({number:7,html_url:'https://github.com/iefnaf/cs336-wiki/issues/7'});
+    throw new Error('unexpected '+url);
+  }});
+  await worker.scheduled({},{...ctx.env,GITHUB_ISSUES_TOKEN:'test-github'});
+  const row=ctx.db.prepare('SELECT status,issue_number FROM feedback').get();
+  assert.deepEqual({...row},{status:'synced',issue_number:7});
+  assert(calls.every(url=>url.startsWith('https://api.github.com/')));
+  await worker.scheduled({},ctx.env);
+  assert.equal(calls.length,2);
+  ctx.db.close();
+});
